@@ -84,7 +84,7 @@ class TransactionsController extends Controller
 
             }
 
-            //se existir adiciona o amount ao total e retorna o total
+            //if account exists, sum amount to current balance
             $total = ($account->balance + $amount);
             $account = Account::where('account_id', $destination)->update(array('balance' => $total));
 
