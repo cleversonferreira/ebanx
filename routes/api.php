@@ -3,9 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::post('reset', function () {
-    return response('OK', 200);
-});
+Route::post('reset', 'Controller@reset');
 
 Route::prefix('event')->group(function () {
     Route::post('/', 'TransactionsController@event');
