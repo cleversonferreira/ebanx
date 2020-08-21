@@ -174,15 +174,17 @@ class TransactionsController extends Controller
 
             //search destination account
             $account_destination = Account::where('account_id', $destination)->first();
-            //subtrai amount de origin
+
+            //subtract amount de origin
             $origin_total = ($account_origin->balance - $amount);
             //atualiza origin balance
             Account::where('account_id', $origin)->update(array('balance' => $origin_total));
 
-            //soma amount de destination
+            //sum destination amount
             $destination_total = ($account_destination->balance + $amount);
-            //atualiza amount destination
+            //update destination amount 
             Account::where('account_id', $destination)->update(array('balance' => $destination_total));
+
             //create transaction
             Transactions::create([
                 'account_id' => $origin,
@@ -198,7 +200,7 @@ class TransactionsController extends Controller
                     "balance" => $origin_total
                 ],
                 'destination' => [
-                    "id" => $origin,
+                    "id" => $destination,
                     "balance" => $destination_total
                 ]
             ], 201);
