@@ -26,7 +26,7 @@ class TransactionsController extends Controller
                     return $this->withdraw($request['origin'], $request['amount']);
                     break;
                 case Types::TRANSFER :
-                    echo "transferencia";
+                    return $this->transfer($request['origin'], $request['amount'], $request['destination']);
                     break;
                 default:
                     throw new \Exception("Inserted type is not permitted");
@@ -143,6 +143,63 @@ class TransactionsController extends Controller
                 'origin' => [
                     "id" => $origin,
                     "balance" => $total
+                ]
+            ], 201);
+
+
+        }catch(\Exception $e){
+            return $e->getMessage();         
+        }
+    }
+
+    public function transfer($origin, $amount, $destination){
+        try{
+
+            if(!isset($origin) || empty($origin))
+                throw new \Exception("Origin cannot be null");
+                
+            if(!isset($amount) || empty($amount))
+                throw new \Exception("Amount cannot be null");
+
+            if(!isset($destination) || empty($destination))
+                throw new \Exception("Destination cannot be null");
+
+            //seach origin account
+            $account_origin = Account::where('account_id', $origin)->first();
+            
+            //if account don't exists
+            if(!$account_origin){
+                return response(0, 404);
+            }
+
+            //search destination account
+            $account_destination = Account::where('account_id', $destination)->first();
+            //subtrai amount de origin
+            $origin_total = ($account_origin->balance - $amount);
+            //atualiza origin balance
+            Account::where('account_id', $origin)->update(array('balance' => $origin_total));
+
+            //soma amount de destination
+            $destination_total = ($account_destination->balance + $amount);
+            //atualiza amount destination
+            Account::where('account_id', $destination)->update(array('balance' => $destination_total));
+            //create transaction
+            Transactions::create([
+                'account_id' => $origin,
+                'type' => Types::TRANSFER,
+                'destination' => $destination,
+                'amount' => $amount,
+            ]);
+
+            
+            return Response::json([
+                'origin' => [
+                    "id" => $origin,
+                    "balance" => $origin_total
+                ],
+                'destination' => [
+                    "id" => $origin,
+                    "balance" => $destination_total
                 ]
             ], 201);
 
