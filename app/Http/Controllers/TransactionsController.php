@@ -167,7 +167,7 @@ class TransactionsController extends Controller
             //seach origin account
             $account_origin = Account::where('account_id', $origin)->first();
             
-            //if account don't exists
+            //if origin account don't exists
             if(!$account_origin){
                 return response(0, 404);
             }
@@ -175,9 +175,26 @@ class TransactionsController extends Controller
             //search destination account
             $account_destination = Account::where('account_id', $destination)->first();
 
+            //if destination account don't exists
+            if(!$account_destination){
+                //create destination user
+                $destination_user = User::create([
+                    'name' => 'Client ' . date('dmyHis'),
+                    'email' => date('dmyHis') . '@ebanx.com',
+                    'password' => Hash::make('secret'),
+                ]);
+
+                //create destination account
+                $account_destination = Account::create([
+                    'account_id' => $destination,
+                    'user_id' => $destination_user->id,
+                    'balance' => 0,
+                ]);
+            }
+
             //subtract amount de origin
             $origin_total = ($account_origin->balance - $amount);
-            //atualiza origin balance
+            //update origin balance
             Account::where('account_id', $origin)->update(array('balance' => $origin_total));
 
             //sum destination amount
