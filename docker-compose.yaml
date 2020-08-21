@@ -2,28 +2,28 @@ version: '3'
 services:
 
   #php
-  app:
+  ebanx_app:
     build:
       context: .
       dockerfile: ./docker/Dockerfile
     image: digitalocean.com/php
-    container_name: app
+    container_name: ebanx_app
     restart: unless-stopped
     tty: true
     environment:
-      SERVICE_NAME: app
+      SERVICE_NAME: ebanx_app
       SERVICE_TAGS: dev
     working_dir: /var/www
     volumes:
        - ./:/var/www
        - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
     networks:
-      - app-network
+      - ebanx_app_network
 
   #nginx
-  webserver:
+  ebanx_nginx:
     image: nginx:alpine
-    container_name: webserver
+    container_name: ebanx_nginx
     restart: unless-stopped
     tty: true
     ports:
@@ -33,12 +33,12 @@ services:
       - ./:/var/www
       - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
     networks:
-      - app-network
+      - ebanx_app_network
 
   #mysql
-  db:
+  ebanx_mysql:
     image: mysql:5.7.22
-    container_name: db
+    container_name: ebanx_mysql
     restart: unless-stopped
     tty: true
     ports:
@@ -52,11 +52,11 @@ services:
       - dbdata:/var/lib/mysql
       - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
     networks:
-      - app-network
+      - ebanx_app_network
 
 #networks
 networks:
-  app-network:
+  ebanx_app_network:
     driver: bridge
     
 #volumes

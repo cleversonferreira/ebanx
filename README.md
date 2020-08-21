@@ -18,11 +18,11 @@ docker-compose up -d
 ```
 **Generate Laravel key**
 ```bash
-docker-compose exec app php artisan key:generate
+docker-compose exec ebanx_app php artisan key:generate
 ```
 **Cache Config**
 ```bash
-docker-compose exec app php artisan config:cache
+docker-compose exec ebanx_app php artisan config:cache
 ```
 **Open project**
 (http://localhost/)
