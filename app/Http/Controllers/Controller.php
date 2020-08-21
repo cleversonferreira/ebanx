@@ -14,7 +14,7 @@ class Controller extends BaseController
 
     public function reset(){
         try{
-            Artisan::call('migrate:reset', ['--force' => true]);
+            Artisan::call('migrate:fresh', ['--force' => true]);
             return response('OK', 200);
         }catch(\Exception $e){
             return $e->getMessage();         
