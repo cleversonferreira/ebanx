@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Enums\Transactions;
 
 class CreateTransactionsTable extends Migration
 {
@@ -15,6 +16,13 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('account_id')
+                ->foreign('account_id')
+                ->references('account_id')
+                ->on('accounts');
+            $table->enum('type', Transactions::TYPES);
+            $table->integer('destination');
+            $table->decimal('amount', 8, 2);
             $table->timestamps();
         });
     }
