@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::post('reset', function () {
-    echo 'reset';
+    return response('OK', 200);
 });
 
 Route::prefix('event')->group(function () {
