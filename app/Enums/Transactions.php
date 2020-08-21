@@ -12,5 +12,5 @@ abstract class Transactions
         self::DEPOSIT,
         self::WITHDRAW,
         self::TRANSFER
-    ]
+    ];
 }
