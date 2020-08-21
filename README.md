@@ -24,5 +24,9 @@ docker-compose exec ebanx_app php artisan key:generate
 ```bash
 docker-compose exec ebanx_app php artisan config:cache
 ```
+**Cache Config**
+```bash
+docker-compose exec ebanx_app php artisan migrate
+```
 **Open project**
 (http://localhost/)
