@@ -15,7 +15,7 @@ class AccountController extends Controller
             if($amount)
                 return response($amount, 200);
             
-            return response(0, 400);
+            return response(strval(0), 400);
 
         }catch(\Exception $e){
             return $e->getMessage();         
