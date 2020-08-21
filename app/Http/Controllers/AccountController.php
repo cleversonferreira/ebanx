@@ -10,7 +10,7 @@ class AccountController extends Controller
     public function balance(Request $request){
         try{
 
-            $amount = Account::where('account_id', $request['account_id'])->pluck('amount')->first();
+            $amount = Account::where('account_id', $request['account_id'])->pluck('balance')->first();
 
             if($amount)
                 return response($amount, 200);
