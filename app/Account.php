@@ -11,10 +11,10 @@ class Account extends Model
     ];
 
     public function user(){
-        return $this->hasOne(User::class)
+        return $this->hasOne(User::class);
     }
 
     public function transactions(){
-        return $this->hasMany(Transactions::class)
+        return $this->hasMany(Transactions::class);
     }
 }

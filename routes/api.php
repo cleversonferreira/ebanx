@@ -14,7 +14,5 @@ Route::prefix('event')->group(function () {
 });
 
 Route::prefix('balance')->group(function () {
-    Route::get('/', function () {
-        echo 'balance';
-    });
+    Route::get('/', 'AccountController@balance');
 });
