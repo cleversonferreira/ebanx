@@ -8,9 +8,7 @@ Route::post('reset', function () {
 });
 
 Route::prefix('event')->group(function () {
-    Route::post('/', function () {
-        echo 'event';
-    });
+    Route::post('/', 'TransactionsController@event');
 });
 
 Route::prefix('balance')->group(function () {

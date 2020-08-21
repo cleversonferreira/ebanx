@@ -19,7 +19,7 @@ class CreateAccountsTable extends Migration
                 ->foreign('user_id')
                 ->references('id')
                 ->on('users');
-            $table->decimal('amount', 8, 2);
+            $table->decimal('balance', 8, 2);
             $table->timestamps();
         });
     }
